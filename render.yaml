@@ -1,0 +1,10 @@
+# render.yaml
+build:
+  apt:
+    packages:
+      - curl
+      - pkg-config
+      - libssl-dev
+      - build-essential
+      - rustc
+      - cargo
