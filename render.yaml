@@ -1,10 +1,21 @@
 # render.yaml
-build:
-  apt:
-    packages:
-      - curl
-      - pkg-config
-      - libssl-dev
-      - build-essential
-      - rustc
-      - cargo
+services:
+  - type: web
+    name: project-scheduling-backend
+    env: python
+    plan: free  # Change to 'starter' or higher for production
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: OPENAI_API_KEY
+        sync: false  # You'll need to set this in Render dashboard
+      - key: FRONTEND_URL
+        value: "https://your-frontend-domain.onrender.com"  # Update with your frontend URL
+      - key: HOST
+        value: "0.0.0.0"
+      - key: DEBUG
+        value: "False"
+    healthCheckPath: /health
+    autoDeploy: true
